@@ -1,32 +1,29 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { Segment } from 'semantic-ui-react';
+// import { Segment } from 'semantic-ui-react';
+import { BrowserRouter as Router, Route,Switch} from 'react-router-dom';
 
 import './App.css';
 import store from './store';
 
-import PositionSelect from "./components/PositionSelect";
-import ChecklistPuesto from './components/Checklist/ChecklisPuesto';
-import PNCPuesto from './components/PNC/PNCPuesto';
+// import PositionSelect from "./components/PositionSelect";
+// import ChecklistPuesto from './components/Checklist/ChecklisPuesto';
+// import PNCPuesto from './components/PNC/PNCPuesto';
+
+import CreateChecklist from './components/CreateChecklist';
+import DisplayChecklist from './components/DisplayChecklist';
 
 class App extends Component {
   render() {
     return (
       <Provider store={store}>
         <div style={{height: '100vh', width: '100vw', background: "#cbcbcb"}}>
-        <Segment.Group raised>
-          <Segment>
-            <PositionSelect />
-          </Segment>
-          <Segment>
-            <h1>Checklist puesto</h1>
-            <ChecklistPuesto />
-          </Segment>
-          {/* <Segment>
-            <h1>PNC puesto</h1>
-            <PNCPuesto />
-          </Segment> */}
-        </Segment.Group>
+        <Router>
+          <Switch>
+          <Route exact path="/" component={CreateChecklist} />
+          <Route exact path="/view" component={DisplayChecklist} />
+          </Switch>
+        </Router>
         </div>
       </Provider>
     );

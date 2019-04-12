@@ -8,7 +8,8 @@ import {
   ADD_EXTRA_ROW, 
   ADD_PUESTO,
   SAVE_TABLE,
-  UPDATE_ROW 
+  UPDATE_ROW,
+  UPDATE_ROW_INPUT,
 } from '../actions/types';
 
 const initialState = {
@@ -20,7 +21,8 @@ const initialState = {
   rows: [],
   saved: {
     Succes:false
-  }
+  },
+  checklist: {}
 };
 
 export default (state= initialState,action) => {
@@ -64,6 +66,10 @@ export default (state= initialState,action) => {
       const rowIndex=(action.payload.i.index);
       const newValue=(action.payload.value);
       return update(state, {rows: { [rowIndex]: {response: {$set: newValue}}}});
+    case UPDATE_ROW_INPUT:
+      const rowIndexInput=(action.payload.i.index);
+      const newValueInput=(action.payload.value);
+      return update(state, {rows: { [rowIndexInput]: {activityInput: {$set: newValueInput}}}});
     case SAVE_TABLE:
       return{
         ...state,

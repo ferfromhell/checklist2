@@ -9,7 +9,8 @@ import {
   ADD_EXTRA_ROW, 
   ADD_PUESTO, 
   SAVE_TABLE,
-  UPDATE_ROW
+  UPDATE_ROW,
+  UPDATE_ROW_INPUT
 } from './types';
 
 
@@ -19,7 +20,6 @@ export const setCurrentUser = decoded => {
     payload: decoded
   };
 };
-
 export const getPuestos = () => dispatch => {
   axios
     .get('https://asesores.ac-labs.com.mx/Mantenimiento/Development/PNC/api_cl_aclab.php?api=position')
@@ -105,6 +105,13 @@ export const addExtraRow = rowsData =>{
 export const updateRow = data =>{
   return {
     type: UPDATE_ROW,
+    payload:data
+  };
+};
+//update Row
+export const updateRowInput = data =>{
+  return {
+    type: UPDATE_ROW_INPUT,
     payload:data
   };
 };

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Table, Select, Button } from 'semantic-ui-react';
-import { addExtraRow,deleteRow,updateRow} from '../../actions/checklisActions';
+import { Table, Select, Button, Input } from 'semantic-ui-react';
+import { addExtraRow,deleteRow,updateRow, updateRowInput} from '../../actions/checklisActions';
 
 
 class RowItem extends Component {
@@ -10,7 +10,8 @@ class RowItem extends Component {
     super(props);
     this.state = {
       rows: this.props.checklist.rows,
-      response: ''
+      response: '',
+      input:''
     }
   }
   deleteRow = (i) => {
@@ -39,6 +40,17 @@ class RowItem extends Component {
     }
     this.props.updateRow(data); 
   }
+  setInput = (e, {value}) => {
+    const i=this.props;
+    e.preventDefault();
+    // console.log(value);
+    this.setState({input: value});
+    const data = {
+      value,
+      i
+    }
+    this.props.updateRowInput(data); 
+  }
   render() {
     const {row,index} = this.props;
     const responseOptions= [
@@ -53,7 +65,11 @@ class RowItem extends Component {
       row.type === 'activity'?
       <Table.Row>
         <Table.Cell width={8}>
-          {row.activityInput}
+          <Input 
+            defaultValue={row.activityInput}
+            style={{width:"90%",padding: "1px"}}
+            onChange={this.setInput.bind()}
+          />  
         </Table.Cell>
         <Table.Cell width={5}>
           <Select
@@ -86,6 +102,7 @@ class RowItem extends Component {
 RowItem.propTypes = {
   addExtraRow: PropTypes.func.isRequired,
   updateRow: PropTypes.func.isRequired,
+  updateRowInput: PropTypes.func.isRequired,
   deleteRow: PropTypes.func.isRequired,
   checklist: PropTypes.object.isRequired
 };
@@ -93,4 +110,4 @@ const mapStateToProps = state => ({
   checklist: state.checklist
 })
 
-export default connect (mapStateToProps,{addExtraRow,deleteRow, updateRow})(RowItem);
+export default connect (mapStateToProps,{addExtraRow,deleteRow, updateRow, updateRowInput})(RowItem);
