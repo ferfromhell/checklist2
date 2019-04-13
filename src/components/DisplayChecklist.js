@@ -1,11 +1,59 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Segment } from 'semantic-ui-react';
+import { Segment,Table, Message } from 'semantic-ui-react';
 
 import PositionSelectDisplay from './displayChecklist/PositionSelect';
-
 import {getChecklist} from '../actions/displayActions';
+
+const TableItem = (dataCL) => {
+  const {data}= dataCL;
+  let rowsCL;
+  console.log(data);
+  if(data !== undefined){
+    rowsCL = JSON.parse(data.rows);
+    // console.log(Array.isArray (rowsCL));
+  } 
+  return(
+    data !==undefined?
+    <Table>
+      <Table.Header>
+        <Table.Row>
+          <Table.HeaderCell>
+            {data.puesto}
+          </Table.HeaderCell>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        {rowsCL.map((r,index) =>{
+            if(r.type === "category"){
+              return (
+                <Table.Row key={index}>
+                  <Table.HeaderCell colSpan='16'>{r.categorySelect}</Table.HeaderCell>
+                </Table.Row>
+              )
+            }else{
+              return (
+                <Table.Row key={index}>
+                    <Table.Cell colSpan='5'>
+                      {r.activityInput}
+                    </Table.Cell>
+                    <Table.Cell colSpan='5'>
+                      {r.response}  
+                    </Table.Cell>
+                    <Table.Cell colSpan='3'>
+                    </Table.Cell>
+                </Table.Row>
+              )
+            }
+        })}
+      </Table.Body>
+    </Table>:
+    null
+  )
+}
+
+
 
 class DisplayChecklist extends Component {
   constructor(props){
@@ -27,8 +75,9 @@ class DisplayChecklist extends Component {
   //   console.log(res);
   // }
   render() {
-    const { puestoSelect } = this.props.display;
-    // const cl = this.getChecklist(puestoSelect);
+    const { puestoSelect,checklist } = this.props.display;
+    const dataCL=checklist !== ''?checklist.Data:null;
+    console.log(dataCL);
     return (
       <div>
         <Segment.Group raised>
@@ -37,8 +86,7 @@ class DisplayChecklist extends Component {
           </Segment>
           <Segment>
             <h1>Checklist puesto</h1>
-            {puestoSelect}
-            {/* {cl} */}
+            <TableItem data={dataCL}/>
           </Segment>
         </Segment.Group>
       </div>
@@ -48,7 +96,7 @@ class DisplayChecklist extends Component {
 
 DisplayChecklist.propTypes = {
   getChecklist: PropTypes.func.isRequired,
-  checklist: PropTypes.object.isRequired
+  // checklist: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
   display: state.display

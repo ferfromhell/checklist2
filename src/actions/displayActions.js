@@ -27,13 +27,13 @@ export const getPuestos = () => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_ERRORS_DISPLAY,
-        payload: err.response.data
+        payload: err.data
       })
     );
 };
 export const getChecklist = (puesto) => dispatch => {
   const url= 'https://asesores.ac-labs.com.mx/Mantenimiento/Development/PNC/api_cl_aclab.php?api=checklist&puesto='+puesto;
-  console.log(url)
+  // console.log(url)
   axios
     .get(url)
     .then(res =>
@@ -46,7 +46,7 @@ export const getChecklist = (puesto) => dispatch => {
     .catch(err =>
       dispatch({
         type: GET_ERRORS_DISPLAY,
-        payload: err.response.data
+        payload: err.response
       })
     );
 };
