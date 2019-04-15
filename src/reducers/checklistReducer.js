@@ -10,6 +10,7 @@ import {
   SAVE_TABLE,
   UPDATE_ROW,
   UPDATE_ROW_INPUT,
+  UPDATE_ROW_INPUT_CAT
 } from '../actions/types';
 
 const initialState = {
@@ -70,6 +71,10 @@ export default (state= initialState,action) => {
       const rowIndexInput=(action.payload.i.index);
       const newValueInput=(action.payload.value);
       return update(state, {rows: { [rowIndexInput]: {activityInput: {$set: newValueInput}}}});
+    case UPDATE_ROW_INPUT_CAT:
+      const rowIndexCat=(action.payload.i.index);
+      const newValueCat=(action.payload.value);
+      return update(state, {rows: { [rowIndexCat]: {categorySelect: {$set: newValueCat}}}});
     case SAVE_TABLE:
       return{
         ...state,

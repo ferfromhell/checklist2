@@ -11,6 +11,7 @@ export const DELETE_ROW = "DELETE_ROW";
 export const ADD_EXTRA_ROW = "ADD_EXTRA_ROW";
 export const UPDATE_ROW = "UPDATE_ROW";
 export const UPDATE_ROW_INPUT = "UPDATE_ROW_INPUT";
+export const UPDATE_ROW_INPUT_CAT = "UPDATE_ROW_INPUT_CAT"
 
 //Display Checklist
 export const GET_CHECKLIST = "GET_CHECKLIST";

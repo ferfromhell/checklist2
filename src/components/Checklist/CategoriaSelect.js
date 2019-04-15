@@ -13,7 +13,7 @@ class CategoriaSelect extends Component {
     }
   }
   componentDidMount= () =>{
-    this.props.getCategorias();
+    this.props.getCategorias(this.props.checklist.puestoSelect);
     // console.log(this.props);
   }
   onChangeCategory = (e, {value}) => {

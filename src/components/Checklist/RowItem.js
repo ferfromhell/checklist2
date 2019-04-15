@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Table, Select, Button, Input } from 'semantic-ui-react';
-import { addExtraRow,deleteRow,updateRow, updateRowInput} from '../../actions/checklisActions';
+import { addExtraRow,deleteRow,updateRow, updateRowInput, updateRowInputCat} from '../../actions/checklisActions';
 
 
 class RowItem extends Component {
@@ -51,6 +51,17 @@ class RowItem extends Component {
     }
     this.props.updateRowInput(data); 
   }
+  setInputCategoria = (e, {value}) => {
+    const i=this.props;
+    e.preventDefault();
+    // console.log(value);
+    this.setState({input: value});
+    const data = {
+      value,
+      i
+    }
+    this.props.updateRowInputCat(data); 
+  }
   render() {
     const {row,index} = this.props;
     const responseOptions= [
@@ -92,7 +103,13 @@ class RowItem extends Component {
       </Table.Row>:
       <Table.Row>
         <Table.Cell>
-          {row.categorySelect}
+          {row.categorySelect === "OTRAS"?
+            <Input 
+            defaultValue={row.categorySelect}
+            style={{width:"90%",padding: "1px"}}
+            onChange={this.setInputCategoria.bind()}
+          />:
+          row.categorySelect}
         </Table.Cell>
       </Table.Row>
     )
@@ -103,6 +120,7 @@ RowItem.propTypes = {
   addExtraRow: PropTypes.func.isRequired,
   updateRow: PropTypes.func.isRequired,
   updateRowInput: PropTypes.func.isRequired,
+  updateRowInputCat: PropTypes.func.isRequired,
   deleteRow: PropTypes.func.isRequired,
   checklist: PropTypes.object.isRequired
 };
@@ -110,4 +128,4 @@ const mapStateToProps = state => ({
   checklist: state.checklist
 })
 
-export default connect (mapStateToProps,{addExtraRow,deleteRow, updateRow, updateRowInput})(RowItem);
+export default connect (mapStateToProps,{addExtraRow,deleteRow, updateRow, updateRowInput, updateRowInputCat})(RowItem);

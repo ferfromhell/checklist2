@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Select } from 'semantic-ui-react';
 
-import {getPuestos, addPuesto} from '../actions/checklisActions';
+import {getPuestos, addPuesto, getCategorias} from '../actions/checklisActions';
 
 class PositionSelect extends Component {
   constructor(props){
@@ -22,6 +22,7 @@ class PositionSelect extends Component {
     this.setState({puestoSelect: value});
     this.setState({isDisabled: true}); 
     this.props.addPuesto(value);
+    this.props.getCategorias(value);
   }
   render() {
     const { puestos } = this.props.checklist;
@@ -39,6 +40,7 @@ class PositionSelect extends Component {
 
 PositionSelect.propTypes = {
   getPuestos: PropTypes.func.isRequired,
+  getCategorias: PropTypes.func.isRequired,
   addPuesto: PropTypes.func.isRequired,
   checklist: PropTypes.object.isRequired
 };
@@ -47,4 +49,4 @@ const mapStateToProps = state => ({
 })
 
 
-export default connect (mapStateToProps,{getPuestos, addPuesto})(PositionSelect);
+export default connect (mapStateToProps,{getPuestos, addPuesto, getCategorias})(PositionSelect);

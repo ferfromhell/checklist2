@@ -10,7 +10,8 @@ import {
   ADD_PUESTO, 
   SAVE_TABLE,
   UPDATE_ROW,
-  UPDATE_ROW_INPUT
+  UPDATE_ROW_INPUT,
+  UPDATE_ROW_INPUT_CAT
 } from './types';
 
 
@@ -37,9 +38,9 @@ export const getPuestos = () => dispatch => {
       })
     );
 };
-export const getCategorias = () => dispatch => {
+export const getCategorias = (puesto) => dispatch => {
   axios
-    .get('https://asesores.ac-labs.com.mx/Mantenimiento/Development/PNC/api_cl_aclab.php?api=category')
+    .get('https://asesores.ac-labs.com.mx/Mantenimiento/Development/PNC/api_cl_aclab.php?api=category&puesto='+puesto)
     .then(res =>
       {
         dispatch({
@@ -112,6 +113,13 @@ export const updateRow = data =>{
 export const updateRowInput = data =>{
   return {
     type: UPDATE_ROW_INPUT,
+    payload:data
+  };
+};
+//update Row
+export const updateRowInputCat = data =>{
+  return {
+    type: UPDATE_ROW_INPUT_CAT,
     payload:data
   };
 };

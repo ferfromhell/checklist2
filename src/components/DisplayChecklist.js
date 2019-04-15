@@ -46,7 +46,9 @@ const TableItem = (dataCL) => {
   let rowsCL;
   console.log(data);
   if(data !== undefined){
-    rowsCL = JSON.parse(data.rows);
+    if(data !== null){
+      rowsCL = JSON.parse(data.rows);
+    }
     // console.log(Array.isArray (rowsCL));
   } 
   return(
