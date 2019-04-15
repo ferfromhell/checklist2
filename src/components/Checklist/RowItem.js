@@ -103,7 +103,7 @@ class RowItem extends Component {
       </Table.Row>:
       <Table.Row>
         <Table.Cell>
-          {row.categorySelect === "OTRAS"?
+          {row.editable === true?
             <Input 
             defaultValue={row.categorySelect}
             style={{width:"90%",padding: "1px"}}

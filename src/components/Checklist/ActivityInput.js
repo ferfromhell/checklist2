@@ -27,7 +27,8 @@ class ActivityInput extends Component {
     const newRow = {
       activityInput: this.state.activityInput,
       response: '',
-      type: this.state.type
+      type: this.state.type,
+      editable: ''
     }
     this.props.addRow(newRow);
     this.setState({activityInput:''});

@@ -9,7 +9,8 @@ class CategoriaSelect extends Component {
   constructor(props){
     super(props);
     this.state = {
-      categorySelect: ''
+      categorySelect: '',
+      editable: ''
     }
   }
   componentDidMount= () =>{
@@ -18,13 +19,16 @@ class CategoriaSelect extends Component {
   }
   onChangeCategory = (e, {value}) => {
     e.preventDefault();
+    const editableField = value ==="OTRAS"?true:false;
+    this.setState({editable:editableField});
     this.setState({categorySelect: value}); 
   }
   handleSubmit = (e) => {
     e.preventDefault()
     const newRow = {
       categorySelect: this.state.categorySelect,
-      type: 'category'
+      type: 'category',
+      editable: this.state.editable
     }
     this.props.addRow(newRow);
   }
