@@ -1,10 +1,45 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Segment,Table, Message } from 'semantic-ui-react';
+import { Segment,Table, Select } from 'semantic-ui-react';
 
 import PositionSelectDisplay from './displayChecklist/PositionSelect';
 import {getChecklist} from '../actions/displayActions';
+
+const InputItem= (type) => {
+  const tipeI = type.type;
+  const responseOptions= [
+    {key:"C",value:"C",text:"C"},
+    {key:"NC",value:"NC",text:"NC"},
+  ];
+  let typeC;
+  switch(tipeI){
+    case 'Numero':
+      typeC="Number";
+      break;
+    case 'Date':
+      typeC="Number";
+      break;
+    case 'Text':
+      typeC="Number";
+      break;
+    case 'CCN':
+      typeC="Radio";
+      break;
+  }
+  console.log('type:C',typeC);
+  return (
+    typeC!=='Radio'?
+      <input type={typeC} name="inputVal"/>:
+      <Select 
+        placeholder="Selecciona respuesta" 
+        options={responseOptions} 
+        // onChange={this.onChangePuesto}
+        style={{width:"100%",margin:"1em auto"}}
+      />
+  )
+}
+
 
 const TableItem = (dataCL) => {
   const {data}= dataCL;
@@ -39,7 +74,7 @@ const TableItem = (dataCL) => {
                       {r.activityInput}
                     </Table.Cell>
                     <Table.Cell colSpan='5'>
-                      {r.response}  
+                      <InputItem type={r.response} />
                     </Table.Cell>
                     <Table.Cell colSpan='3'>
                     </Table.Cell>
