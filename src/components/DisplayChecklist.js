@@ -18,13 +18,16 @@ const InputItem= (type) => {
       typeC="Number";
       break;
     case 'Date':
-      typeC="Number";
+      typeC="Text";
       break;
     case 'Text':
-      typeC="Number";
+      typeC="Date";
       break;
     case 'CCN':
       typeC="Radio";
+      break;
+    default:
+      typeC=Date;
       break;
   }
   console.log('type:C',typeC);
@@ -112,7 +115,7 @@ class DisplayChecklist extends Component {
   //   console.log(res);
   // }
   render() {
-    const { puestoSelect,checklist } = this.props.display;
+    const { checklist } = this.props.display;
     const dataCL=checklist !== ''?checklist.Data:null;
     console.log(dataCL);
     return (

@@ -11,7 +11,8 @@ import {
   SAVE_TABLE,
   UPDATE_ROW,
   UPDATE_ROW_INPUT,
-  UPDATE_ROW_INPUT_CAT
+  UPDATE_ROW_INPUT_CAT,
+  SHOW_MODAL
 } from './types';
 
 
@@ -88,6 +89,12 @@ export const addPuesto = puesto =>{
     payload: puesto
   };
 };
+export const showModal = isOpen =>{
+  return {
+    type: SHOW_MODAL,
+    payload: isOpen
+  };
+};
 //
 export const addRow = rowData =>{
   return {
@@ -130,6 +137,7 @@ export const deleteRow = rowData =>{
     payload: rowData
   };
 };
+
 // export const getPuestos = () => dispatch => {
 //   axios.get()
 //     .then(res =>

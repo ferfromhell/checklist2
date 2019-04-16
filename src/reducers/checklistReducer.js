@@ -10,7 +10,8 @@ import {
   SAVE_TABLE,
   UPDATE_ROW,
   UPDATE_ROW_INPUT,
-  UPDATE_ROW_INPUT_CAT
+  UPDATE_ROW_INPUT_CAT,
+  SHOW_MODAL
 } from '../actions/types';
 
 const initialState = {
@@ -79,6 +80,12 @@ export default (state= initialState,action) => {
       return{
         ...state,
         saved: action.payload
+      }
+    case SHOW_MODAL:
+      return{
+        // ...state,
+        // saved: action.payload
+        initialState
       }
     default:
       return state;

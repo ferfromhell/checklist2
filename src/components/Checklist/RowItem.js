@@ -71,7 +71,7 @@ class RowItem extends Component {
       {key:"Text",value:"Text",text:"Texto"},
     ];
     
-    // console.log( row,index);
+    console.log(row);
     return (
       row.type === 'activity'?
       <Table.Row>
@@ -87,7 +87,7 @@ class RowItem extends Component {
             placeholder="tipo de respuesta"
             options={responseOptions}
             onChange={this.setResponse.bind()}
-            style={{zIndex:'100'}}
+            style={{width:"100%",margin:"1em auto", zIndex:'1'}}
           />
         </Table.Cell>
         <Table.Cell width={3}>
