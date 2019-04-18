@@ -24,7 +24,7 @@ class RowItem extends Component {
   addExtraRow = (i) => {
     var rows = this.props.checklist.rows;
     //console.log(rows);
-    rows.splice( i+1, 0, {activityInput: 'New activity', response:'' ,type:'activity'} );
+    rows.splice( i+1, 0, {activityInput: 'Nueva actividad', response:'' ,type:'activity'} );
     //console.log(i);
     this.setState({rows});
     this.props.addExtraRow(rows);
@@ -65,8 +65,8 @@ class RowItem extends Component {
   render() {
     const {row,index} = this.props;
     const responseOptions= [
-      {key:"CCN",value:"CCN",text:"C/CN"},
-      {key:"Numero",value:"Numero",text:"Numero"},
+      {key:"CCN",value:"Radio",text:"C/CN"},
+      {key:"Numero",value:"Number",text:"Numero"},
       {key:"Date",value:"Date",text:"Fecha"},
       {key:"Text",value:"Text",text:"Texto"},
     ];

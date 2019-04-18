@@ -1,105 +1,20 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Segment,Table, Select } from 'semantic-ui-react';
+import { Segment,Table, Button, Modal, Icon} from 'semantic-ui-react';
 
 import PositionSelectDisplay from './displayChecklist/PositionSelect';
-import {getChecklist} from '../actions/displayActions';
+import {getChecklist, saveTableDisplay} from '../actions/displayActions';
 
-const InputItem= (type) => {
-  const tipeI = type.type;
-  const responseOptions= [
-    {key:"C",value:"C",text:"C"},
-    {key:"NC",value:"NC",text:"NC"},
-  ];
-  let typeC;
-  switch(tipeI){
-    case 'Numero':
-      typeC="Number";
-      break;
-    case 'Date':
-      typeC="Text";
-      break;
-    case 'Text':
-      typeC="Date";
-      break;
-    case 'CCN':
-      typeC="Radio";
-      break;
-    default:
-      typeC=Date;
-      break;
-  }
-  console.log('type:C',typeC);
-  return (
-    typeC!=='Radio'?
-      <input type={typeC} name="inputVal"/>:
-      <Select 
-        placeholder="Selecciona respuesta" 
-        options={responseOptions} 
-        // onChange={this.onChangePuesto}
-        style={{width:"100%",margin:"1em auto"}}
-      />
-  )
-}
-
-
-const TableItem = (dataCL) => {
-  const {data}= dataCL;
-  let rowsCL;
-  console.log(data);
-  if(data !== undefined){
-    if(data !== null){
-      rowsCL = JSON.parse(data.rows);
-    }
-    // console.log(Array.isArray (rowsCL));
-  } 
-  return(
-    data !==undefined?
-    <Table>
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell>
-            {data.puesto}
-          </Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
-      <Table.Body>
-        {rowsCL.map((r,index) =>{
-            if(r.type === "category"){
-              return (
-                <Table.Row key={index}>
-                  <Table.HeaderCell colSpan='16'>{r.categorySelect}</Table.HeaderCell>
-                </Table.Row>
-              )
-            }else{
-              return (
-                <Table.Row key={index}>
-                    <Table.Cell colSpan='5'>
-                      {r.activityInput}
-                    </Table.Cell>
-                    <Table.Cell colSpan='5'>
-                      <InputItem type={r.response} />
-                    </Table.Cell>
-                    <Table.Cell colSpan='3'>
-                    </Table.Cell>
-                </Table.Row>
-              )
-            }
-        })}
-      </Table.Body>
-    </Table>:
-    null
-  )
-}
-
+import RowItem from './displayChecklist/RowItem';
 
 
 class DisplayChecklist extends Component {
   constructor(props){
     super(props);
     this.state = {
-      puesto: ''
+      puesto: '',
+      open: false
     }
   }
   shouldComponentUpdate= () =>{
@@ -108,25 +23,50 @@ class DisplayChecklist extends Component {
     res=this.state.puesto===newPuesto?false:true;
     return res;
   }
-  // getChecklist = () => {
-  //   const puesto = this.props.checklist.puestoSelect;
-  //   console.log(puesto)
-  //   const res=this.props.getChecklist(puesto);
-  //   console.log(res);
-  // }
+  saveTable = async() => {
+    var rows = this.props.display.rows;
+    //console.log(rows);
+    const newTable= {
+      puesto: this.props.display.puestoSelect,
+      rows
+    }
+    console.log(newTable);
+    await this.props.saveTableDisplay(newTable);
+    console.log(this.props.display.saved);
+  }
+  close = () => this.setState({ open: false })
   render() {
-    const { checklist } = this.props.display;
-    const dataCL=checklist !== ''?checklist.Data:null;
-    console.log(dataCL);
+    const { rows } = this.props.display;
+    const {open} = this.state;
     return (
       <div>
+        <Modal
+          open={open}
+          onClose={this.close}
+        >
+          <Modal.Header>Checklist guardado en BD!</Modal.Header>
+          <Modal.Content>El checklist a sido salvado exitosamente.</Modal.Content>
+          <Button color='green' onClick={this.close}>
+            <Icon name='checkmark'/> Ok
+          </Button>
+        </Modal>
         <Segment.Group raised>
           <Segment>
             <PositionSelectDisplay />
           </Segment>
           <Segment>
             <h1>Checklist puesto</h1>
-            <TableItem data={dataCL}/>
+            <Table celled striped fixed color="blue">
+              <Table.Body>
+                {rows.map((row,i) => <RowItem key={i} row={row} index={i}/>)}    
+              </Table.Body>
+            </Table>
+            {rows.length >0?
+              <Button 
+                icon='save' 
+                onClick={this.saveTable}
+                positive
+              />:null}
           </Segment>
         </Segment.Group>
       </div>
@@ -136,10 +76,11 @@ class DisplayChecklist extends Component {
 
 DisplayChecklist.propTypes = {
   getChecklist: PropTypes.func.isRequired,
+  saveTableDisplay: PropTypes.func.isRequired
   // checklist: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
   display: state.display
 })
 
-export default connect(mapStateToProps,{getChecklist})(DisplayChecklist);
+export default connect(mapStateToProps,{getChecklist, saveTableDisplay})(DisplayChecklist);

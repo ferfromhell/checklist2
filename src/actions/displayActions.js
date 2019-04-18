@@ -4,7 +4,11 @@ import {
   GET_ERRORS_DISPLAY, 
   SET_CURRENT_USER_DISPLAY, 
   ADD_PUESTO_DISPLAY, 
-  GET_CHECKLIST
+  GET_CHECKLIST,
+  SET_ROWS,
+  UPDATE_ROW_DISPLAY,
+  UPDATE_ROW_INPUT_DISPLAY,
+  SAVE_TABLE_DISPLAY
 } from './types';
 
 //Display Checklist
@@ -38,10 +42,18 @@ export const getChecklist = (puesto) => dispatch => {
     .get(url)
     .then(res =>
       {
+        let rowsCL = JSON.parse(res.data['Data']['rows']);
+        console.log(rowsCL);
         dispatch({
         type: GET_CHECKLIST,
         payload: res.data
-      })}
+        });
+        dispatch(
+          {
+            type: SET_ROWS,
+            payload: rowsCL
+          });
+      }
     )
     .catch(err =>
       dispatch({
@@ -57,30 +69,50 @@ export const addPuesto = puesto =>{
     payload: puesto
   };
 };
-
-//Save table
-// export const saveTable = (table) => dispatch => {
-//   console.log(table);
-//   axios
-//     .post('https://asesores.ac-labs.com.mx/Mantenimiento/Development/PNC/api_cl_aclab.php', JSON.stringify({
-//       puesto: table.puesto,
-//       rows: table.rows,
-//       type: 'checklist'
-//     }))
-//     .then(res =>
-//       {
-//         console.log(res)
-//         dispatch({
-//         type: SAVE_TABLE,
-//         payload: res.data
-//       })}
-//     )
-//     .catch(err =>{
-//         console.log(err);
-//         dispatch({
-//           type: GET_ERRORS,
-//           payload: err.response.data
-//         })
-//       }
-//     );
+//update Row
+export const updateRowDisplay = data =>{
+  return {
+    type: UPDATE_ROW_DISPLAY,
+    payload:data
+  };
+};
+//update Row
+export const updateRowInput = data =>{
+  return {
+    type: UPDATE_ROW_INPUT_DISPLAY,
+    payload:data
+  };
+};
+// export const setRows = rows =>{
+//   return {
+//     type: SET_ROWS,
+//     payload: rows
+//   };
 // };
+
+// Save table
+export const saveTableDisplay = (table) => dispatch => {
+  console.log(table);
+  axios
+    .post('https://asesores.ac-labs.com.mx/Mantenimiento/Development/PNC/api_cl_aclab.php', JSON.stringify({
+      puesto: table.puesto,
+      rows: table.rows,
+      type: 'answer'
+    }))
+    .then(res =>
+      {
+        console.log(res)
+        dispatch({
+        type: SAVE_TABLE_DISPLAY,
+        payload: res.data
+      })}
+    )
+    .catch(err =>{
+        console.log(err);
+        dispatch({
+          type: GET_ERRORS_DISPLAY,
+          payload: err.response.data
+        })
+      }
+    );
+};

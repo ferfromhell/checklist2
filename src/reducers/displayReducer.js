@@ -1,9 +1,12 @@
-// import update from 'immutability-helper';
+import update from 'immutability-helper';
 import { 
   SET_CURRENT_USER_DISPLAY,
   GET_PUESTOS_DISPLAY, 
   ADD_PUESTO_DISPLAY,
   GET_CHECKLIST,
+  SET_ROWS,
+  UPDATE_ROW_DISPLAY,
+  SAVE_TABLE_DISPLAY
 } from '../actions/types';
 
 const initialState = {
@@ -40,7 +43,21 @@ export default (state= initialState,action) => {
         ...state,
         checklist: action.payload
       }
-    default:
+    case SET_ROWS:
+      return{
+        ...state,
+        rows: action.payload
+      }
+    case UPDATE_ROW_DISPLAY:
+      const rowIndex=(action.payload.i.index);
+      const newValue=(action.payload.value);
+      return update(state, {rows: { [rowIndex]: {answer: {$set: newValue}}}});
+    case SAVE_TABLE_DISPLAY:
+      return{
+        ...state,
+        saved: action.payload
+      }
+      default:
       return state;
   }
 }
