@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Segment,Table, Button, Modal, Icon} from 'semantic-ui-react';
+import { Segment,Table, Button, Modal} from 'semantic-ui-react';
 
 import PositionSelectDisplay from './displayChecklist/PositionSelect';
 import {getChecklist, saveTableDisplay} from '../actions/displayActions';
@@ -14,7 +14,7 @@ class DisplayChecklist extends Component {
     super(props);
     this.state = {
       puesto: '',
-      open: false
+      isOpen: false
     }
   }
   shouldComponentUpdate= () =>{
@@ -32,24 +32,25 @@ class DisplayChecklist extends Component {
     }
     console.log(newTable);
     await this.props.saveTableDisplay(newTable);
-    console.log(this.props.display.saved);
   }
-  close = () => this.setState({ open: false })
+  handleClose = () => {
+    this.setState({ isOpen: false });
+    window.location.reload();
+    // this.props.showModal({Succes:false});
+  }
   render() {
     const { rows } = this.props.display;
-    const {open} = this.state;
     return (
       <div>
         <Modal
-          open={open}
-          onClose={this.close}
-        >
-          <Modal.Header>Checklist guardado en BD!</Modal.Header>
-          <Modal.Content>El checklist a sido salvado exitosamente.</Modal.Content>
-          <Button color='green' onClick={this.close}>
-            <Icon name='checkmark'/> Ok
-          </Button>
-        </Modal>
+          open={this.props.display.saved.Success}
+          basic
+          size='small'
+          onClose={this.handleClose}
+          header='Checklist guardada!'
+          content='Tu checklist fue salvada con exito'
+          actions={[{ key: 'OK', content: 'OK', positive: true }]}
+        />
         <Segment.Group raised>
           <Segment>
             <PositionSelectDisplay />

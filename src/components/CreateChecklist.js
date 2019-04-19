@@ -22,7 +22,6 @@ class CreateChecklist extends Component {
   }
 
   render() {
-    console.log();
     return (
       <div>
         <Modal

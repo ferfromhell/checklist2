@@ -44,7 +44,6 @@ class ChecklistTable extends Component {
         <Button 
           icon='save' 
           onClick={this.saveTable}
-          positive
         />:null}
       </div>
       // <div>
