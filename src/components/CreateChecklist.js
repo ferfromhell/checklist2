@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { Segment,Modal } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import PositionSelect from "./PositionSelect";
+
 import ChecklistPuesto from './Checklist/ChecklisPuesto';
+import PNCPuesto from './PNC/PNCPuesto';
 
 import { showModal } from '../actions/checklisActions';
 
@@ -41,10 +43,10 @@ class CreateChecklist extends Component {
             <h1>Checklist puesto</h1>
             <ChecklistPuesto />
           </Segment>
-          {/* <Segment>
+          <Segment>
             <h1>PNC puesto</h1>
             <PNCPuesto />
-          </Segment> */}
+          </Segment>
         </Segment.Group>
       </div>
     )

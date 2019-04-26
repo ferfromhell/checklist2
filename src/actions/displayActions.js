@@ -20,7 +20,7 @@ export const setCurrentUser = decoded => {
 };
 export const getPuestos = () => dispatch => {
   axios
-    .get('https://asesores.ac-labs.com.mx/Mantenimiento/Development/PNC/api_cl_aclab.php?api=position')
+    .get('https://asesores.ac-labs.com.mx/Mantenimiento/Development/PNC/api_cl_aclab.php?api=positionCL')
     .then(res =>
       {
         dispatch({

@@ -12,6 +12,7 @@ import store from './store';
 
 import CreateChecklist from './components/CreateChecklist';
 import DisplayChecklist from './components/DisplayChecklist';
+import DisplayAnswers from './components/DisplayAnswers';
 
 class App extends Component {
   render() {
@@ -22,6 +23,7 @@ class App extends Component {
           <Switch>
           <Route exact path="/" component={CreateChecklist} />
           <Route exact path="/view" component={DisplayChecklist} />
+          <Route exact path="/results" component={DisplayAnswers} />
           </Switch>
         </Router>
         </div>

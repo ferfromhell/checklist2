@@ -24,3 +24,14 @@ export const SET_ROWS = "SET_ROWS";
 export const UPDATE_ROW_INPUT_DISPLAY = "UPDATE_ROW_INPUT_DISPLAY"
 export const UPDATE_ROW_DISPLAY = "UPDATE_ROW_DISPLAY"
 export const SAVE_TABLE_DISPLAY = "SAVE_TABLE_DISPLAY"
+
+// Display answers
+export const GET_PUESTOS_RESULTS = "GET_PUESTOS_RESULTS";
+export const GET_ERRORS_RESULTS = "GET_ERRORS_RESULTS";
+
+
+//PNC Chacklist
+ //Levels
+export const GET_LEVELS = 'GET_LEVELS';
+export const GET_ERRORS_PNC = 'GET_ERRORS_PNC';
+export const SET_SELECT = "SET_SELECT";
