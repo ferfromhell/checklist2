@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Form,Select,List, Button } from 'semantic-ui-react';
 
-import {getLevels, setSelect} from '../../actions/pncActions';
+import {getLevels, setSelect, setQs} from '../../actions/pncActions';
 
 class LevelSelect extends Component {
   constructor(props){
     super(props);
     this.state = {
-      levelOpt: []
+      levelOpt: [],
+      pncChecklist: {}
     }
   }
   componentDidMount= () =>{
@@ -28,10 +29,11 @@ class LevelSelect extends Component {
     const result = selectOptions.filter(op => op.ParentId ===parentId && op.Level === level)
     return result
   }
-  onChangeLevel = (e, {value,name}) => {
+  onChangeLevel = (e, {value,name,select}) => {
     e.preventDefault();
-    console.log(value,name)
+    console.log(value,name);
     this.newLevel(value,name);
+    //Set object of object to draw table
   }
   newLevel = (parentId,name) => {
     let level= parseInt(name.slice(-1))+1;
@@ -55,9 +57,20 @@ class LevelSelect extends Component {
     for(let i=level+1;i<oldLevels.length;i++){
       oldLevels[i]=null;
     }
+    // allLevels[level].push()
     this.setState({levelOpt:oldLevels});
     this.props.setSelect(oldLevels);
 
+    
+
+  }
+  addExtraRow = (index, text) => {
+    const newRow = {
+      activityInput: text,
+      index,
+      response: ''
+    }
+    this.props.setQs(newRow)
   }
   render() {
     const {levelsSelect} = this.props.pnc;
@@ -76,8 +89,8 @@ class LevelSelect extends Component {
         </Form.Group>
         {levelsSelect.map((level,i) => {
                 if(level){
-                  const levelNum=level.level;
-                console.log(levelNum);
+                  // const levelNum=level.level;
+                //console.log(levelNum);
                 return level.isSelect === true?
                   <Select 
                     key={i}
@@ -89,14 +102,14 @@ class LevelSelect extends Component {
                   />:
                   <List divided relaxed key={i}>
                     {level.options.map((opt,i)=>{
-                      console.log(opt)
+                      // console.log(opt)
                       return <List.Item key={i}>
                                 <Button 
                                   icon='add'
                                   compact
                                   size='mini'
                                   color='green'
-                                  // onClick={this.addExtraRow.bind(this, index)} 
+                                  onClick={this.addExtraRow.bind(this, i, opt.text)} 
                                 />
                                 {opt.text}
                               </List.Item>
@@ -105,7 +118,8 @@ class LevelSelect extends Component {
                 }else{
                   return null
                 }
-              })}
+              })
+        }
       </Form>
     )
   }
@@ -113,11 +127,10 @@ class LevelSelect extends Component {
 
 LevelSelect.propTypes = {
   getLevels: PropTypes.func.isRequired,
-  setSelect: PropTypes.func.isRequired
+  setSelect: PropTypes.func.isRequired,
+  setQs: PropTypes.func.isRequired,
 }
 const mapStateToProps = state => ({
   pnc: state.pnc
 })
-
-
-export default connect(mapStateToProps,{getLevels,setSelect})(LevelSelect);
+export default connect(mapStateToProps,{getLevels,setSelect, setQs})(LevelSelect);

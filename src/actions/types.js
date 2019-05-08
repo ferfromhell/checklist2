@@ -35,3 +35,6 @@ export const GET_ERRORS_RESULTS = "GET_ERRORS_RESULTS";
 export const GET_LEVELS = 'GET_LEVELS';
 export const GET_ERRORS_PNC = 'GET_ERRORS_PNC';
 export const SET_SELECT = "SET_SELECT";
+export const SET_QS= "SET_QS";
+export const UPDATE_ROW_PNC = "UPDATE_ROW_PNC";
+export const SAVE_TABLE_PNC = "SAVE_TABLE_PNC";

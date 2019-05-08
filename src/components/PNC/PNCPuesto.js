@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Segment } from 'semantic-ui-react';
 
 import LevelSelect from './LevelSelect';
+import ChecklistTable from './ChecklistTable';
 
 class PNCPuesto extends Component {
   render() {
@@ -11,7 +12,7 @@ class PNCPuesto extends Component {
           <LevelSelect />
         </Segment>
         <Segment>
-          {/* <ChecklistTable /> */}
+          <ChecklistTable />
         </Segment>
       </Segment.Group>
     )

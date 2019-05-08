@@ -71,7 +71,7 @@ class RowItem extends Component {
       {key:"Text",value:"Text",text:"Texto"},
     ];
     
-    console.log(row);
+    // console.log(row);
     return (
       row.type === 'activity'?
       <Table.Row>
