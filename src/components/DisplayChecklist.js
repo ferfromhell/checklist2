@@ -5,8 +5,10 @@ import { Segment,Table, Button, Modal} from 'semantic-ui-react';
 
 import PositionSelectDisplay from './displayChecklist/PositionSelect';
 import {getChecklist, saveTableDisplay} from '../actions/displayActions';
+import {getChecklistPNC,saveAnswerPNC} from '../actions/pncActions';
 
 import RowItem from './displayChecklist/RowItem';
+import RowItemPNC from './displayChecklist/RowItemPNC';
 
 
 class DisplayChecklist extends Component {
@@ -25,13 +27,20 @@ class DisplayChecklist extends Component {
   }
   saveTable = async() => {
     var rows = this.props.display.rows;
-    //console.log(rows);
+    var rowsPNC = this.props.pnc.rowsPNC;
+    let puesto = this.props.display.puestoSelect
+    // console.log(rowsPNC);
     const newTable= {
-      puesto: this.props.display.puestoSelect,
+      puesto,
       rows
     }
-    console.log(newTable);
+    const newTablePNC= {
+      puesto,
+      rowsPNC
+    }
+    // console.log(newTablePNC);
     await this.props.saveTableDisplay(newTable);
+    await this.props.saveAnswerPNC(newTablePNC);
   }
   handleClose = () => {
     this.setState({ isOpen: false });
@@ -40,6 +49,7 @@ class DisplayChecklist extends Component {
   }
   render() {
     const { rows } = this.props.display;
+    const { rowsPNC } = this.props.pnc;
     return (
       <div>
         <Modal
@@ -62,13 +72,27 @@ class DisplayChecklist extends Component {
                 {rows.map((row,i) => <RowItem key={i} row={row} index={i}/>)}    
               </Table.Body>
             </Table>
-            {rows.length >0?
+            {/* {rows.length >0?
+              <Button 
+                icon='save' 
+                onClick={this.saveTable}
+                positive
+              />:null} */}
+          </Segment>
+          <Segment>
+            <h1>Checklist riesgos</h1>
+            <Table celled striped fixed color="blue">
+              <Table.Body>
+              {rowsPNC.map((row,i) => <RowItemPNC key={i} row={row} index={i}/>)}    
+              </Table.Body>
+            </Table>
+          </Segment>
+          {rowsPNC.length >0?
               <Button 
                 icon='save' 
                 onClick={this.saveTable}
                 positive
               />:null}
-          </Segment>
         </Segment.Group>
       </div>
     )
@@ -77,11 +101,13 @@ class DisplayChecklist extends Component {
 
 DisplayChecklist.propTypes = {
   getChecklist: PropTypes.func.isRequired,
-  saveTableDisplay: PropTypes.func.isRequired
-  // checklist: PropTypes.object.isRequired
+  getChecklistPNC: PropTypes.func.isRequired,
+  saveTableDisplay: PropTypes.func.isRequired,
+  saveAnswerPNC: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
-  display: state.display
+  display: state.display,
+  pnc: state.pnc
 })
 
-export default connect(mapStateToProps,{getChecklist, saveTableDisplay})(DisplayChecklist);
+export default connect(mapStateToProps,{getChecklist, saveTableDisplay,getChecklistPNC, saveAnswerPNC})(DisplayChecklist);

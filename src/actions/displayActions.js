@@ -43,7 +43,7 @@ export const getChecklist = (puesto) => dispatch => {
     .then(res =>
       {
         let rowsCL = JSON.parse(res.data['Data']['rows']);
-        console.log(rowsCL);
+        // console.log(rowsCL);
         dispatch({
         type: GET_CHECKLIST,
         payload: res.data

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Select } from 'semantic-ui-react';
 
 import {getPuestos, addPuesto, getChecklist} from '../../actions/displayActions';
-
+import { getChecklistPNC} from '../../actions/pncActions';
 class PositionSelectDisplay extends Component {
   constructor(props){
     super(props);
@@ -23,6 +23,7 @@ class PositionSelectDisplay extends Component {
     this.setState({isDisabled: true}); 
     this.props.addPuesto(value);
     this.props.getChecklist(value);
+    this.props.getChecklistPNC(value);
   }
   render() {
     const { puestos } = this.props.display;
@@ -42,6 +43,7 @@ PositionSelectDisplay.propTypes = {
   getPuestos: PropTypes.func.isRequired,
   addPuesto: PropTypes.func.isRequired,
   getChecklist: PropTypes.func.isRequired,
+  getChecklistPNC: PropTypes.func.isRequired,
   display: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
@@ -49,4 +51,4 @@ const mapStateToProps = state => ({
 })
 
 
-export default connect (mapStateToProps,{getPuestos, addPuesto, getChecklist})(PositionSelectDisplay);
+export default connect (mapStateToProps,{getPuestos, addPuesto, getChecklist, getChecklistPNC})(PositionSelectDisplay);
